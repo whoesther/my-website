@@ -8,7 +8,7 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Esther Rachel: Room by Room</title>
+<title>Esther Rachel: Case Study Room</title>
 <meta name="description" content="Click a room to open a real marketing case study — Multimodal, LYZR AI, and freelance/contract work." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,23 +91,47 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
   #themeToggle:hover{ border-color:var(--brass); color:var(--brass); }
 
   #panel{
-    position:fixed; top:0; right:0; height:100%; width:min(360px, 88vw);
+    position:fixed; top:0; right:0; height:100%; width:min(440px, 92vw);
     background:var(--panel-bg); border-left:1px solid var(--line);
     transform:translateX(100%); transition:transform 0.35s ease;
-    z-index:8; padding:88px 30px 30px; overflow-y:auto;
+    z-index:8; padding:88px 32px 60px; overflow-y:auto;
   }
   #panel.open{ transform:translateX(0); }
   #panel .kicker{ font-size:11px; letter-spacing:0.06em; color:var(--ink-soft); }
   #panel h2{ font-family:'Fraunces',serif; font-weight:500; font-size:26px; margin:8px 0 4px; color:var(--ink); }
   #panel .role{ font-size:12px; color:var(--ink-soft); margin-bottom:18px; }
   #panel ul{ padding-left:18px; margin:0; font-family:'Inter',system-ui,sans-serif; font-size:14px; line-height:1.6; }
-  #panel li{ margin-bottom:12px; }
+  #panel li{ margin-bottom:10px; }
   #panel li strong{ color:var(--brass); font-family:'JetBrains Mono'; font-weight:500; }
   #panelClose{
-    position:absolute; top:30px; right:30px; background:none; border:none;
+    position:absolute; top:30px; right:32px; background:none; border:none;
     font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-soft); cursor:pointer;
   }
   #panelClose:hover{ color:var(--brass); }
+
+  #panelBody{ font-family:'Inter',system-ui,sans-serif; }
+  .panel-section{ margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .panel-section:first-child{ margin-top: 22px; }
+  .panel-section h3{
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    font-size:17px; margin:0 0 12px; color:var(--ink);
+  }
+  .panel-label{
+    font-family:'JetBrains Mono'; font-size:10px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--brass); display:block; margin:14px 0 5px;
+  }
+  .panel-label:first-of-type{ margin-top:0; }
+  .panel-body p{ font-size:14px; line-height:1.6; margin:0; color:var(--ink); }
+  .panel-principle{
+    font-family:'Fraunces',serif; font-style:italic; font-size:15px;
+    line-height:1.5; margin:14px 0 0; padding:14px 16px; border-left:2px solid var(--brass);
+    background: rgba(201,144,63,0.08); color: var(--ink);
+  }
+  #panelResultsHead{
+    font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-soft); margin:26px 0 12px;
+    padding-top:22px; border-top:1px solid var(--line);
+  }
 
   #tooltip{
     position:fixed; z-index:6; pointer-events:none; font-size:11px;
@@ -129,7 +153,7 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
 
 <header>
   <div>
-    <div class="title">esther rachel / <strong>room by room</strong></div>
+    <div class="title">esther rachel / <strong>case study room</strong></div>
     <div class="hint">click a room to open the case study. drag to look around.</div>
   </div>
   <nav>
@@ -148,6 +172,8 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
   <div class="kicker" id="panelTag"></div>
   <h2 id="panelName"></h2>
   <div class="role" id="panelRole"></div>
+  <div id="panelBody"></div>
+  <div id="panelResultsHead">Results</div>
   <ul id="panelList"></ul>
 </div>
 
@@ -157,7 +183,22 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
   var ROOMS = {
     multimodal: {
       tag: 'Agentic AI · Fintech', name: 'Multimodal', role: 'Marketing Consultant, Social Media Manager',
-      bullets: [
+      sections: [
+        {
+          context: "Multimodal sells agentic AI into financial institutions. The buying audience is more senior, more risk-aware, and less responsive to youth-oriented trend marketing than a consumer app audience.",
+          objective: "Make a highly technical category understandable, credible, and trustworthy to non-technical financial-services decision-makers.",
+          focus: "Audience-specific positioning, professional visual systems, industry-native language, educational content, and people-led trust building.",
+          strategy: [
+            "Use clean, highly designed, professional creative rather than chasing every viral format.",
+            "Speak the language of the industry &mdash; translate AI terminology into the workflows, risks, and outcomes financial-services leaders already understand.",
+            "Humanize the brand by putting recognizable operators, customers, and experts in front of it, since an abstract technical company is harder to trust.",
+            "Build authority through people-forward initiatives like an advisory board, to attach credible human judgment to a technical product.",
+            "Favor proof, education, and professionalism over content designed purely for reach &mdash; the goal is to make the company easier to evaluate, not simply more visible."
+          ],
+          principle: "B2B marketing for regulated financial institutions is a trust problem before it's a virality problem. The content has to reduce perceived risk, demonstrate fluency in the buyer's world, and put credible humans around the technology."
+        }
+      ],
+      results: [
         'Grew LinkedIn engagement <strong>13x</strong> in 5 months while leading strategy through a Series A funding push, and drove an average of <strong>50K</strong> monthly impressions on X.',
         "Repositioned the company page around a people-first, advisory-board format after diagnosing that this industry's audience (average age 53) responds to trusted faces, not product claims.",
         'One advisory-board post cycle pulled <strong>410 reactions and 60 comments</strong> on a 2,897-follower page. Over the following 30 days: <strong>714 reactions (+276% MoM)</strong> and <strong>119 new followers (+129% MoM)</strong>.',
@@ -166,7 +207,22 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     },
     lyzr: {
       tag: 'Enterprise AI', name: 'LYZR AI', role: 'Business Consultant',
-      bullets: [
+      sections: [
+        {
+          context: "Lyzr was in an early funding and growth stage &mdash; a still-small team, a strong push for market visibility, and a fast-moving, founder-led culture.",
+          objective: "Create far more distribution than the company page alone could generate, without a large paid media engine.",
+          focus: "Internal relationship-building, employee advocacy, account-level publishing support, tracking, and incentive design.",
+          strategy: [
+            "Company-page content has a natural reach ceiling, so the strategy was to turn the people inside the company into a network of credible publishing nodes, not simply “post more from the brand.”",
+            "Started with trust inside a hybrid/remote team, building individual relationships before asking anyone for consistent participation.",
+            "Grew and managed a personal-account network that started around 50 people and reached roughly 70, so distribution never depended on one founder or the company page.",
+            "Built a tracker that made participation visible: posting at least once a week kept someone active in the program.",
+            "Used consistency-based recognition to encourage posting streaks and coordinated enough participation that one idea could be shared across many accounts at once."
+          ],
+          principle: "When a startup needs reach but doesn't yet have a massive brand audience, distribution can be built from the inside out. A coordinated employee network can outperform a company page by compounding many small audiences &mdash; 100 impressions across 50 accounts is roughly 5,000 distributed impressions before any secondary sharing."
+        }
+      ],
+      results: [
         'Ran <strong>70+</strong> LinkedIn accounts plus personal branding for the CEO, Co-Founder, and Head of Partnerships.',
         'Organized strategic partnership logistics and events with AWS and NVIDIA, including AWS NYC Summit 2025 and NYC Tech Week.',
         'Delivered monthly webinars averaging <strong>700+ registrations</strong> per event.',
@@ -175,7 +231,33 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     },
     freelance: {
       tag: 'Freelance & Contract', name: 'Women Who Build, Unacademy & Airlearn', role: 'Copywriter / Brand Marketing',
-      bullets: [
+      sections: [
+        {
+          heading: 'Women Who Build',
+          context: "The business was built around expertise and information. A podcast was the main content engine, drawing people into the founder's ecosystem and supporting lead generation.",
+          objective: "Create a consistent LinkedIn presence without reinventing the format for every post.",
+          strategy: [
+            "Developed a repeatable LinkedIn post structure that matched the founder's audience and made expertise easy to consume.",
+            "Built a repeatable visual template so the design stayed recognizable while cutting production effort.",
+            "Used the podcast as the source of ideas, arguments, and stories that fed LinkedIn, instead of treating every channel as a separate content operation.",
+            "Published consistently, reviewed what resonated, and adjusted the template based on actual audience behavior."
+          ],
+          principle: "For an expertise-led personal brand, the strongest content system is a repeatable editorial format built around one deep source of insight, not a constant stream of unrelated ideas."
+        },
+        {
+          heading: 'Unacademy & Airlearn',
+          context: "Airlearn was a newer language-learning brand in a category where Duolingo was the clearest reference point for content and brand behavior. The audience skewed younger than the B2B work above.",
+          objective: "Build awareness quickly and increase the odds of breakout content through volume, iteration, and creator distribution.",
+          strategy: [
+            "Used Duolingo as a competitive reference point, not to copy it, but to understand which formats and publishing behaviors already worked in the category.",
+            "Prioritized volume: daily publishing and far more creative output than a conventional B2B content calendar.",
+            "Sourced short, low-cost videos in bulk from micro-influencers rather than one large influencer campaign, evaluated on a cost-per-thousand-views basis.",
+            "Treated content as an iterative system &mdash; publish, observe what earns attention, reuse the pattern, and discard what consistently underperforms."
+          ],
+          principle: "For a young, trend-native audience, speed of learning can matter more than perfection. High content volume creates more chances to discover what the market responds to."
+        }
+      ],
+      results: [
         'Grew LinkedIn and daily newsletter impressions as high as <strong>800%</strong> in a single month for Women Who Build.',
         'Produced interviews with senior operators including a former Coursera CMO and a BNP Paribas Managing Director.',
         "Grew Unacademy's social presence <strong>750%</strong> in the first month on the account.",
@@ -215,13 +297,78 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     document.getElementById('panelTag').textContent = r.tag;
     document.getElementById('panelName').textContent = r.name;
     document.getElementById('panelRole').textContent = r.role;
+
+    var body = document.getElementById('panelBody');
+    body.innerHTML = '';
+    r.sections.forEach(function(s){
+      var section = document.createElement('div');
+      section.className = 'panel-section';
+
+      if (s.heading) {
+        var h = document.createElement('h3');
+        h.textContent = s.heading;
+        section.appendChild(h);
+      }
+
+      var pbody = document.createElement('div');
+      pbody.className = 'panel-body';
+
+      var contextLabel = document.createElement('span');
+      contextLabel.className = 'panel-label';
+      contextLabel.textContent = 'Context';
+      pbody.appendChild(contextLabel);
+      var contextP = document.createElement('p');
+      contextP.innerHTML = s.context;
+      pbody.appendChild(contextP);
+
+      var objLabel = document.createElement('span');
+      objLabel.className = 'panel-label';
+      objLabel.textContent = 'Objective';
+      pbody.appendChild(objLabel);
+      var objP = document.createElement('p');
+      objP.innerHTML = s.objective;
+      pbody.appendChild(objP);
+
+      if (s.focus) {
+        var focusLabel = document.createElement('span');
+        focusLabel.className = 'panel-label';
+        focusLabel.textContent = 'My focus';
+        pbody.appendChild(focusLabel);
+        var focusP = document.createElement('p');
+        focusP.innerHTML = s.focus;
+        pbody.appendChild(focusP);
+      }
+
+      var stratLabel = document.createElement('span');
+      stratLabel.className = 'panel-label';
+      stratLabel.textContent = 'Strategy';
+      pbody.appendChild(stratLabel);
+      var stratList = document.createElement('ul');
+      s.strategy.forEach(function(item){
+        var li = document.createElement('li');
+        li.innerHTML = item;
+        stratList.appendChild(li);
+      });
+      pbody.appendChild(stratList);
+
+      var principle = document.createElement('div');
+      principle.className = 'panel-principle';
+      principle.innerHTML = s.principle;
+      pbody.appendChild(principle);
+
+      section.appendChild(pbody);
+      body.appendChild(section);
+    });
+
     var list = document.getElementById('panelList');
     list.innerHTML = '';
-    r.bullets.forEach(function(b){
+    r.results.forEach(function(b){
       var li = document.createElement('li');
       li.innerHTML = b;
       list.appendChild(li);
     });
+
+    panel.scrollTop = 0;
     panel.classList.add('open');
   }
   document.getElementById('panelClose').addEventListener('click', function(){
