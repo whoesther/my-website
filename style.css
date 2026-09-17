@@ -238,6 +238,8 @@ blockquote {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .service:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(19,28,43,0.08); }
+/* closing positioning statement spans the grid instead of sitting alone in a row */
+.service.full { grid-column: 1 / -1; border-color: var(--color-sage-500); }
 .service h3 { font-size: 17px; margin-bottom: 8px; }
 .service p { font-size: 14px; color: var(--color-text-muted); line-height: 1.55; margin: 0; }
 
