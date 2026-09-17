@@ -1,33 +1,18 @@
-// footer year
-document.getElementById('year').textContent = new Date().getFullYear();
+// Quiet reveal-on-scroll — no bounce, no fuss.
+document.addEventListener('DOMContentLoaded', () => {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) return;
 
-// mobile nav toggle
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.navlinks');
+  items.forEach((el) => el.classList.add('is-hidden'));
 
-navToggle.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('is-open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
-});
-
-navLinks.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// reveal sections on scroll
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(
-  (entries) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+        entry.target.classList.remove('is-hidden');
         observer.unobserve(entry.target);
       }
     });
-  },
-  { threshold: 0.15 }
-);
-revealEls.forEach((el) => observer.observe(el));
+  }, { threshold: 0.15 });
+
+  items.forEach((el) => observer.observe(el));
+});
