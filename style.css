@@ -160,11 +160,21 @@ section.stats {
 .stat:nth-child(3) { background: var(--color-brass); }
 .stat:nth-child(4) { background: var(--color-navy-700); }
 
+.stat.stat-link { display: block; text-decoration: none; }
+.stat.stat-link:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(19,28,43,0.18); }
+
 .stat .num {
   font-family: var(--font-mono); font-size: clamp(26px, 4.2vw, 36px);
   font-weight: 600; color: var(--color-on-dark); line-height: 1;
 }
 .stat:nth-child(3) .num { color: var(--color-navy-900); }
+
+.stat .num-sub {
+  font-family: var(--font-mono); font-size: clamp(13px, 1.8vw, 16px);
+  font-weight: 500; color: var(--color-on-dark); opacity: 0.75;
+  line-height: 1; margin-top: 7px;
+}
+.stat:nth-child(3) .num-sub { color: var(--color-navy-900); }
 
 .stat .label {
   font-size: 13px; margin-top: 10px; line-height: 1.4;
