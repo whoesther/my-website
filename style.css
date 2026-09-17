@@ -14,14 +14,14 @@
   --color-navy-500: #34506f;
   --color-navy-300: #8fa3b8;
 
-  /* Sage / seafoam (secondary) */
-  --color-sage-900: #2e362c;
-  --color-sage-700: #556252;
-  --color-sage-500: #8a9b82;
+  /* Sage / seafoam (secondary) — deepened for more punch */
+  --color-sage-900: #23301f;
+  --color-sage-700: #3c6b4d;
+  --color-sage-500: #6fa383;
   --color-sage-300: #c3cdb9;
 
-  /* Brass (rare accent) */
-  --color-brass: #ab8654;
+  /* Brass (accent) — warmer, richer gold */
+  --color-brass: #c9903f;
 
   --color-accent: var(--color-sage-500);
   --color-accent-alt: var(--color-navy-500);
@@ -134,17 +134,35 @@ h1.headline {
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.ghost { color: var(--color-text); } }
 .btn.ghost:hover { background: var(--color-sage-300); transform: translateY(-2px); }
 
-/* STAT BAND */
+/* STAT BAND — vibrant colored tiles */
 section.stats {
-  padding-block: 40px;
-  border-bottom: 1px solid var(--color-border);
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  padding-block: 56px 48px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
 }
 @media (max-width: 700px) { section.stats { grid-template-columns: repeat(2, 1fr); } }
-.stat .num { font-family: var(--font-mono); font-size: clamp(24px, 4vw, 32px); font-weight: 500; color: var(--color-sage-700); }
-:root[data-theme="dark"] .stat .num { color: var(--color-sage-300); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stat .num { color: var(--color-sage-300); } }
-.stat .label { font-size: 13px; color: var(--color-text-muted); margin-top: 6px; line-height: 1.4; }
+
+.stat {
+  border-radius: 16px;
+  padding: 28px 22px;
+  transition: transform 0.15s ease;
+}
+.stat:hover { transform: translateY(-3px); }
+.stat:nth-child(1) { background: var(--color-navy-900); }
+.stat:nth-child(2) { background: var(--color-sage-700); }
+.stat:nth-child(3) { background: var(--color-brass); }
+.stat:nth-child(4) { background: var(--color-navy-700); }
+
+.stat .num {
+  font-family: var(--font-mono); font-size: clamp(26px, 4.2vw, 36px);
+  font-weight: 600; color: var(--color-bg); line-height: 1;
+}
+.stat:nth-child(3) .num { color: var(--color-navy-900); }
+
+.stat .label {
+  font-size: 13px; margin-top: 10px; line-height: 1.4;
+  color: rgba(247, 242, 232, 0.82);
+}
+.stat:nth-child(3) .label { color: rgba(19, 28, 43, 0.72); }
 
 /* SECTIONS */
 section { padding-block: 64px; }
