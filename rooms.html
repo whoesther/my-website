@@ -252,7 +252,53 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     brass: 0xc9903f, sand: 0xefe7d8, sage3: 0xc3cdb9
   };
 
-  function room(x, z, wallColor, roofColor, key){
+  function buildRoof(type, color){
+    var g = new THREE.Group();
+    var mat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.65 });
+    var finialMat = new THREE.MeshStandardMaterial({ color: COLORS.brass, roughness: 0.4, metalness: 0.15 });
+    var eaveY = 1.12;
+
+    if (type === 'pyramid') {
+      var pyramid = new THREE.Mesh(new THREE.ConeGeometry(1.55, 0.85, 4), mat);
+      pyramid.rotation.y = Math.PI / 4;
+      pyramid.position.y = eaveY + 0.85 / 2;
+      g.add(pyramid);
+      var finial = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), finialMat);
+      finial.position.y = eaveY + 0.85 + 0.09;
+      g.add(finial);
+
+    } else if (type === 'gable') {
+      var halfBase = 1.15, roofRise = 0.55;
+      var tilt = Math.atan2(roofRise, halfBase);
+      var slopeLen = halfBase / Math.cos(tilt);
+      var panelGeoA = new THREE.BoxGeometry(2.3, 0.06, slopeLen);
+      panelGeoA.translate(0, 0, slopeLen / 2);
+      var panelA = new THREE.Mesh(panelGeoA, mat);
+      panelA.rotation.x = -tilt;
+      panelA.position.y = eaveY;
+      g.add(panelA);
+      var panelGeoB = new THREE.BoxGeometry(2.3, 0.06, slopeLen);
+      panelGeoB.translate(0, 0, -slopeLen / 2);
+      var panelB = new THREE.Mesh(panelGeoB, mat);
+      panelB.rotation.x = tilt;
+      panelB.position.y = eaveY;
+      g.add(panelB);
+      var ridge = new THREE.Mesh(new THREE.BoxGeometry(2.32, 0.09, 0.09), finialMat);
+      ridge.position.y = eaveY + roofRise + 0.045;
+      g.add(ridge);
+
+    } else if (type === 'cone') {
+      var turret = new THREE.Mesh(new THREE.ConeGeometry(1.35, 0.95, 20), mat);
+      turret.position.y = eaveY + 0.95 / 2;
+      g.add(turret);
+      var finialCone = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), finialMat);
+      finialCone.position.y = eaveY + 0.95 + 0.09;
+      g.add(finialCone);
+    }
+    return g;
+  }
+
+  function room(x, z, wallColor, roofColor, key, roofType){
     var group = new THREE.Group();
     group.position.set(x, 0, z);
 
@@ -271,12 +317,7 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     wallSide.position.set(-0.95, 0.62, 0);
     group.add(wallSide);
 
-    var roof = new THREE.Mesh(
-      new THREE.BoxGeometry(2.1, 0.08, 2.1),
-      new THREE.MeshStandardMaterial({ color: roofColor, roughness: 0.7 })
-    );
-    roof.position.y = 1.16;
-    group.add(roof);
+    group.add(buildRoof(roofType, roofColor));
 
     var propMat = new THREE.MeshStandardMaterial({ color: COLORS.navy2, roughness: 0.6 });
     for (var i = 0; i < 3; i++) {
@@ -318,9 +359,9 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
     scene.add(group);
   }
 
-  room(-1.05, -1.05, COLORS.navy, COLORS.brass, 'multimodal');
-  room(1.05, -1.05, COLORS.sage, COLORS.sage3, 'lyzr');
-  room(-1.05, 1.05, COLORS.brass, COLORS.sand, 'freelance');
+  room(-1.05, -1.05, COLORS.navy, COLORS.brass, 'multimodal', 'pyramid');
+  room(1.05, -1.05, COLORS.sage, COLORS.sage3, 'lyzr', 'gable');
+  room(-1.05, 1.05, COLORS.brass, COLORS.sand, 'freelance', 'cone');
   emptyPlot(1.05, 1.05);
 
   var raycaster = new THREE.Raycaster();
