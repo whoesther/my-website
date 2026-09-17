@@ -485,6 +485,89 @@ Layout: isometric three.js diorama, 3 solid "rooms" (Multimodal / LYZR / Freelan
   room(-1.05, 1.05, COLORS.brass, COLORS.sand, 'freelance', 'cone', 'creative');
   emptyPlot(1.05, 1.05);
 
+  // ---------- tiny peeps: small figures with floating speech-bubble labels ----------
+  function speechSprite(text){
+    var canvas = document.createElement('canvas');
+    var scale = 3;
+    canvas.width = 340 * scale;
+    canvas.height = 110 * scale;
+    var ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    var w = 340, h = 110, r = 18, tailW = 16, tailH = 14;
+
+    ctx.beginPath();
+    ctx.moveTo(r, 0);
+    ctx.lineTo(w - r, 0);
+    ctx.quadraticCurveTo(w, 0, w, r);
+    ctx.lineTo(w, h - r - tailH);
+    ctx.quadraticCurveTo(w, h - tailH, w - r, h - tailH);
+    ctx.lineTo(w / 2 + tailW, h - tailH);
+    ctx.lineTo(w / 2, h);
+    ctx.lineTo(w / 2 - tailW, h - tailH);
+    ctx.lineTo(r, h - tailH);
+    ctx.quadraticCurveTo(0, h - tailH, 0, h - r - tailH);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.closePath();
+    ctx.fillStyle = '#f7f2e8';
+    ctx.fill();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#c9903f';
+    ctx.stroke();
+
+    ctx.fillStyle = '#131c2b';
+    ctx.font = "600 26px 'JetBrains Mono', monospace";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, w / 2, (h - tailH) / 2 + 2);
+
+    var texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    var mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+    var sprite = new THREE.Sprite(mat);
+    var aspect = w / h;
+    var spriteHeight = 0.34;
+    sprite.scale.set(spriteHeight * aspect, spriteHeight, 1);
+    return sprite;
+  }
+
+  function peep(x, z, outfitColor, text, phaseOffset){
+    var group = new THREE.Group();
+    group.position.set(x, 0, z);
+
+    var skinMat = new THREE.MeshStandardMaterial({ color: 0xd9b98c, roughness: 0.7 });
+    var outfitMat = new THREE.MeshStandardMaterial({ color: outfitColor, roughness: 0.8 });
+
+    var legs = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.055, 0.16, 10), outfitMat);
+    legs.position.y = 0.08;
+    group.add(legs);
+
+    var torso = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 0.18, 10), outfitMat);
+    torso.position.y = 0.25;
+    group.add(torso);
+
+    var head = new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 12), skinMat);
+    head.position.y = 0.35;
+    group.add(head);
+
+    var bubble = speechSprite(text);
+    bubble.position.y = 0.62;
+    group.add(bubble);
+
+    group.userData.bob = { speed: 0.7, amp: 0.02, offset: phaseOffset };
+    group.userData.baseY = 0;
+    group.userData.spin = 0;
+    vibeAnimTargets.push(group);
+
+    scene.add(group);
+    return group;
+  }
+
+  peep(-2.05, -0.35, COLORS.sage2, 'founder linkedin', 0.4);
+  peep(2.05, -0.35, COLORS.brass, 'organic growth', 1.8);
+  peep(-2.05, 2.05, COLORS.navy2, 'viral content creation', 3.1);
+  peep(0, -2.9, COLORS.sage2, 'personal brand building', 5.0);
+
   var raycaster = new THREE.Raycaster();
   var mouse = new THREE.Vector2();
   var tooltip = document.getElementById('tooltip');
