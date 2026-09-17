@@ -169,6 +169,7 @@ section { padding-block: 64px; }
 section.divider { border-bottom: 1px solid var(--color-border); }
 .section-head { margin-bottom: 32px; }
 .section-head h2 { font-size: clamp(22px, 3vw, 30px); }
+.section-head .work-cta { margin-top: 16px; display: inline-block; }
 
 /* CASE STUDIES */
 .case {
@@ -178,11 +179,6 @@ section.divider { border-bottom: 1px solid var(--color-border); }
 .case:first-of-type { border-top: none; padding-top: 0; }
 @media (max-width: 640px) { .case { grid-template-columns: 1fr; gap: 12px; } }
 .case .who { position: sticky; top: 16px; align-self: start; }
-.logo-mark {
-  display: block; max-height: 28px; max-width: 140px; width: auto; height: auto;
-  object-fit: contain; margin-bottom: 12px;
-}
-.case .who .logo-mark + .logo-mark { margin-top: -2px; }
 .case .name { font-family: var(--font-display); font-size: 19px; color: var(--color-navy-900); }
 :root[data-theme="dark"] .case .name { color: var(--color-text); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .case .name { color: var(--color-text); } }
